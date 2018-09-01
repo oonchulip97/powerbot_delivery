@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Map</title>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+		<style>
+			/* Always set the map height explicitly to define the size of the div
+			 * element that contains the map. */
+			#map {
+				height: 100%;
+			}
+			/* Optional: Makes the sample page fill the window. */
+			html, body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="map"></div>
+
+		<script type="text/javascript" src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+		<script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+
+		<script type="text/javascript" type="text/javascript">
+
+		function initMap() {
+
+			// Connecting to ROS
+			// -----------------
+			var ros = new ROSLIB.Ros({
+				url : 'ws://localhost:9090'
+			});
+
+			ros.on('connection', function() {
+				console.log('Connected to websocket server.');
+			});
+
+			ros.on('error', function(error) {
+				console.log('Error connecting to websocket server: ', error);
+			});
+
+			ros.on('close', function() {
+				console.log('Connection to websocket server closed.');
+			});
+
+			var start;
+			var map;
+			var start_marker;
+			var current_marker;
+			var end_marker;
+			var waypoints = [];
+			var waypoint_markers = [];
+			var directionsService = new google.maps.DirectionsService();
+			var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers:true});
+
+			function getInitialLocation(){
+
+				var start_lat;
+				var start_lng;
+
+				var start_lat_ros = new ROSLIB.Param({
+					ros : ros,
+					name : 'start_ros/lat'
+				});
+
+				var start_lng_ros = new ROSLIB.Param({
+					ros : ros,
+					name : 'start_ros/lng'
+				});
+
+				start_lat_ros.get(function(value){
+					start_lat = value;
+				});
+
+				start_lng_ros.get(function(value){
+					start_lng = value;
+				});
+
+				window.alert("Please select your destination.");
+				if (start_lat  != undefined && start_lng != undefined){
+					start = new google.maps.LatLng(start_lat, start_lng);
+
+					map = new google.maps.Map(document.getElementById('map'), {
+						center: start,
+						zoom: 17
+					});
+
+					start_marker = new google.maps.Marker({
+						position: start,
+						map: map,
+						label: "Start"
+					});
+				} else {
+					window.alert("ERROR: Initial location is not found.");
+				}
+			}
+
+			getInitialLocation();
+
+			function updateCurrentLocation(){
+
+				// Subscribing to a Topic
+				// ----------------------
+	  		var listener = new ROSLIB.Topic({
+	    		ros : ros,
+	    		name : '/android/fix',
+	    		messageType : 'sensor_msgs/NavSatFix'
+	  		});
+
+	  		listener.subscribe(function(message) {
+	    		console.log('Updating current location...');
+
+					if (current_marker && current_marker.setMap) {
+						current_marker.setMap(null);
+					};
+
+			    var current_lat=message.latitude;
+			    var current_lng=message.longitude;
+					var current = new google.maps.LatLng(current_lat, current_lng);
+					current_marker = new google.maps.Marker({
+						position: current,
+						map: map,
+						label: "Now"
+					});
+		      map.setCenter(current);
+			    listener.unsubscribe();
+	  		});
+				setTimeout(updateCurrentLocation,5000);
+			}
+
+			updateCurrentLocation();
+
+			directionsDisplay.setMap(map);
+
+			google.maps.event.addListenerOnce(map, "click", function (event){
+
+				var end_lat = event.latLng.lat();
+				var end_lng = event.latLng.lng();
+				var end = new google.maps.LatLng(end_lat, end_lng);
+
+				if (end_marker && end_marker.setMap) {
+					end_marker.setMap(null);
+				};
+
+				end_marker = new google.maps.Marker({
+					position: end,
+					map: map,
+					label: "End"
+				});
+
+				function calculateAndDisplayRoute() {
+
+					var request = {
+						origin: start,
+						destination: end,
+						travelMode: 'WALKING'
+					};
+
+					directionsService.route(request, function(result, status) {
+						if (status == 'OK') {
+							directionsDisplay.setDirections(result);
+
+							for (var i = 0; i < waypoint_markers.length; i++) {
+								waypoint_markers[i].setMap(null);
+								waypoints = [];
+							}
+
+							var myRoute = result.routes[0].legs[0];
+							for (var i = 0; i < myRoute.steps.length; i++) {
+								var marker = waypoint_markers[i] = waypoint_markers[i] || new google.maps.Marker;
+								marker.setMap(map);
+								marker.setPosition(myRoute.steps[i].end_location);
+								waypoints[i] = myRoute.steps[i].end_location;
+							}
+
+						} else {
+							window.alert('Directions request failed due to ' + status);
+						}
+
+						var waypoints_ros = new ROSLIB.Param({
+							ros : ros,
+							name : 'waypoints_ros'
+						});
+
+						waypoints_ros.set(waypoints);
+					});
+				}
+				calculateAndDisplayRoute();
+			});
+		}
+		</script>
+		<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6lcnDEp1yYHl9PkAUEFVK3NSKIyULMyo&callback=initMap">
+		</script>
+	</body>
+</html>

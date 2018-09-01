@@ -1,0 +1,19 @@
+powerbot_delivery:
+  # GPS Filter
+  gps_topic_filter: 'android/fix'
+  imu_topic_filter: 'android/imu'
+  odom_topic_filter: 'rosaria/pose'
+  num_geocoordinates_initial: 10
+  num_geocoordinates: 5
+  magnetic_declination: 16.18
+  yaw_offset: 0
+  min_covariance_threshold: 9
+  max_covariance_threshold: 100
+  pub_freq: 10
+
+  # Powerbot Delivery's SMACH
+  gps_topic_smach: '/navsat/fix' # 'android/fix_filter'
+  imu_topic_smach: '/imu/data' # 'android/imu'
+  reload_path: '/home/caris/.mozilla/firefox/6u2woyqf.default/sessionstore-backups/recovery.jsonlz4'
+  map_url: 'file:///home/caris/sidewalk_navigation2/sidewalk_navigation/simulation/simulation_ros_catkin_ws/src/powerbot_delivery/scripts/map.html'
+  goal_tolerance: 11

@@ -1,0 +1,17 @@
+<launch>
+
+	<!-- launch configuration file-->
+	<rosparam file="$(find powerbot_delivery)/powerbot_delivery_config.yaml" command="load"/>
+
+	<!-- launch gps filter -->
+	<node pkg="powerbot_delivery" type="gps_filter.py" name="gps_filter" output="screen"/>
+
+	<!-- launch smach file -->
+	<node pkg="powerbot_delivery" type="powerbot_delivery_smach.py" name="powerbot_delivery_state_machine" output="screen"/>
+
+	<!-- launch rosbridge server -->
+	<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" >
+		<arg name="port" value="9090"/>
+	</include>
+
+</launch>
