@@ -8,16 +8,48 @@ This state machine was tested using:
 - Mozzila Firefox 54.0
 
 # Setup
-Install rosbridge
+## Installation
+Install SMACH.
+```
+cd <workspace>/src
+git clone https://github.com/ros/executive_smach
+```
+
+Install SMACH viewer.
+```
+cd <workspace>/src
+https://github.com/ros-visualization/executive_smach_visualization
+```
+
+Install rosbridge.
 ```
 sudo apt-get install ros-kinetic-rosbridge-server
 ```
 
-Install nodejs
+Install nodejs and npm.
 ```
 sudo apt-get install nodejs
 sudo apt-get install npm
 ```
+
+Install pip.
+```
+sudo apt-get install python-pip
+```
+
+Install utm.
+```
+pip install utm
+```
+
+Install lz4.
+```
+pip install lz4
+```
+
+## Configuration
+
+
 
 
 
