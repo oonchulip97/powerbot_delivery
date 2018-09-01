@@ -49,7 +49,7 @@ pip install lz4
 ```
 
 ## Configuration
-Within powerbot_delivery_config.yaml file, modify the following parameters:
+Within the powerbot_delivery_config.yaml file, modify the following parameters:
 
 ```
 reload_path
@@ -61,7 +61,7 @@ map_url
 ```
 This should be the url when you open scripts/map.html in the browser.
 
-There are other parameters within the configuration file that you should change as needed.
+There are other parameters within the configuration file that you should change as required.
 
 # Running
 
@@ -69,7 +69,7 @@ Run the following in a terminal.
 ```
 roslaunch powerbot_delivery powerbot_delivery.launch
 ```
-This will load the configuration file onto the parameter server and run both GPS filter and the state machine.
+This will load the configuration file onto the parameter server and run both the GPS filter and the state machine.
 
 # Mechanism
 ## GPS Filter
