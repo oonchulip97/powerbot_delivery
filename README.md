@@ -9,35 +9,36 @@ This state machine was tested using:
 
 # Setup
 ## Installation
-Install SMACH which is used to build hierarchical state machines.
+Install SMACH to build hierarchical state machines.
 ```
 cd <workspace>/src
 git clone https://github.com/ros/executive_smach
 ```
 
-Install SMACH viewer which is a GUI that shows the state of hierarchical SMACH state machines.
+Install SMACH viewer to show the state of hierarchical SMACH state machines.
 ```
 cd <workspace>/src
 https://github.com/ros-visualization/executive_smach_visualization
 ```
 
-Install rosbridge.
+Install rosbridge to provide JSON API to ROS functionality.
 ```
 sudo apt-get install ros-kinetic-rosbridge-server
 ```
 
-Install nodejs and npm.
+Install roslibjs to communicate with rosbridge from the browser.
 ```
-sudo apt-get install nodejs
 sudo apt-get install npm
+cd <workspace>/src
+git clone https://github.com/RobotWebTools/roslibjs.git
 ```
 
-Install pip which is a package management system used to install and manage software packages written in Python. 
+Install pip to install software packages written in Python. 
 ```
 sudo apt-get install python-pip
 ```
 
-Install utm which is a bidirectional UTM-WGS84 geocoordinates converter for Python.
+Install utm to convert between UTM and WGS84 geocoordinates in Python.
 ```
 pip install utm
 ```
