@@ -9,13 +9,13 @@ This state machine was tested using:
 
 # Setup
 ## Installation
-Install SMACH.
+Install SMACH which is used to build hierarchical state machines.
 ```
 cd <workspace>/src
 git clone https://github.com/ros/executive_smach
 ```
 
-Install SMACH viewer.
+Install SMACH viewer which is a GUI that shows the state of hierarchical SMACH state machines.
 ```
 cd <workspace>/src
 https://github.com/ros-visualization/executive_smach_visualization
@@ -32,17 +32,17 @@ sudo apt-get install nodejs
 sudo apt-get install npm
 ```
 
-Install pip.
+Install pip which is a package management system used to install and manage software packages written in Python. 
 ```
 sudo apt-get install python-pip
 ```
 
-Install utm.
+Install utm which is a bidirectional UTM-WGS84 geocoordinates converter for Python.
 ```
 pip install utm
 ```
 
-Install lz4.
+Install lz4 to provide Python bindings for the LZ4 compression library.
 ```
 pip install lz4
 ```
