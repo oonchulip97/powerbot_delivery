@@ -5,7 +5,7 @@ This state machine was tested using:
 - Ubuntu 16.04.3 Xenial
 - ROS Kinetic
 - Python 2.7.12
-- Mozzila Firefox 54.0
+- Mozilla Firefox 54.0
 
 # Setup
 ## Installation
@@ -28,7 +28,7 @@ sudo apt-get install ros-kinetic-rosbridge-server
 
 Install roslibjs to communicate with rosbridge from the browser.
 ```
-sudo apt-get install npm
+sudo apt-get install nodejs npm
 cd <workspace>/src
 git clone https://github.com/RobotWebTools/roslibjs.git
 ```
@@ -43,16 +43,25 @@ Install utm to convert between UTM and WGS84 geocoordinates in Python.
 pip install utm
 ```
 
-Install lz4 to provide Python bindings for the LZ4 compression library.
+Install lz4 to enable decompression of Firefox .jsonlz4 files.
 ```
 pip install lz4
 ```
 
 ## Configuration
+Within powerbot_delivery_config.yaml file, modify the following parameters:
 
+```
+reload_path
+```
+This should be 
 
+```
+map_url
+```
+This should be the url when you open scripts/map.html in the browser.
 
-
+There are other parameters within the configuration file that you should change as needed.
 
 # Running
 
