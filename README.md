@@ -56,14 +56,21 @@ reload_path
 ```
 This should be the path to the recovery.jsonlz4 file located within .mozilla directory.
 
-Typically, it is `/home/<user>/.mozilla/firefox/<alphanumeric characters>.default/sessionstore-backups/recovery.jsonlz4`
+Typically, it is `/home/<user>/.mozilla/firefox/<alphanumeric characters>.default/sessionstore-backups/recovery.jsonlz4`.
+
+```
+map_path
+```
+This should be the path to scripts/map.html.
+
+Typically, it is `/home/<user>/<workspace>/src/powerbot_delivery/scripts/map.html`.
 
 ```
 map_url
 ```
 This should be the url when you open scripts/map.html in the browser.
 
-Typically, it is `file:///home/<user>/<workspace>/src/powerbot_delivery/scripts/map.html`
+Typically, it is `file:///home/<user>/<workspace>/src/powerbot_delivery/scripts/map.html`.
 
 There are other parameters within the configuration file that you should change as needed.
 
