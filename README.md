@@ -79,3 +79,4 @@ This will load the configuration file onto the parameter server and run both the
 ## GPS Filter
 
 ## State Machine
+ <img src="/images/state_machine_flow_diagram.jpg"  width="500">
