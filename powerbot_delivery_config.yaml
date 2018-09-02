@@ -12,8 +12,8 @@ powerbot_delivery:
   pub_freq: 10
 
   # Powerbot Delivery's SMACH
-  gps_topic_smach: '/navsat/fix' # 'android/fix_filter'
-  imu_topic_smach: '/imu/data' # 'android/imu'
-  reload_path: '/home/caris/.mozilla/firefox/6u2woyqf.default/sessionstore-backups/recovery.jsonlz4'
-  map_url: 'file:///home/caris/sidewalk_navigation2/sidewalk_navigation/simulation/simulation_ros_catkin_ws/src/powerbot_delivery/scripts/map.html'
+  gps_topic_smach: 'android/fix_filter' # '/navsat/fix'
+  imu_topic_smach: 'android/imu' #'/imu/data'
+  reload_path: # '/home/caris/.mozilla/firefox/6u2woyqf.default/sessionstore-backups/recovery.jsonlz4'
+  map_url: 'file:///home/parallels/catkin_ws/src/powerbot_delivery/scripts/map.html' # 'file:///home/caris/sidewalk_navigation2/sidewalk_navigation/simulation/simulation_ros_catkin_ws/src/powerbot_delivery/scripts/map.html'
   goal_tolerance: 11
