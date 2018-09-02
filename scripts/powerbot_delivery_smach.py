@@ -118,7 +118,7 @@ class Navigate(smach.State):
 		rospy.loginfo('Executing state SEND_GOAL')
 
 		waypoint_pub = rospy.Publisher('waypoint', Pose, queue_size=10)
-		goal_tolerance = rospy.get_param('goal_tolerance') # How close current position to goal should be to be considered arrived
+		goal_tolerance = rospy.get_param('powerbot_delivery/goal_tolerance') # How close current position to goal should be to be considered arrived
 
 		rate = rospy.Rate(10)
 		while not rospy.is_shutdown():
@@ -128,7 +128,6 @@ class Navigate(smach.State):
 				return 'preempted'
 
 			# Retrieve current location
-			print 'Waiting for GPS signal from satellite for SMACH...'
 			while not rospy.is_shutdown():
 				if self.preempt_requested():
 					self.service_preempt()
@@ -140,24 +139,21 @@ class Navigate(smach.State):
 				except:
 					pass
 			currentPosition = GeoCoordinate(location.latitude,location.longitude)
-			print 'GPS Signal Received for SMACH.'
 
 			# Retrieve heading
-			print 'Waiting for IMU signal for SMACH...'
 			while not rospy.is_shutdown():
 				if self.preempt_requested():
 					self.service_preempt()
 					return 'preempted'
 				try:
 					imu_topic = rospy.get_param('powerbot_delivery/imu_topic_smach')
-					imu = rospy.wait_for_message('imu_topic', Imu, timeout = 1)
+					imu = rospy.wait_for_message(imu_topic, Imu, timeout = 1)
 					break
 				except:
 					pass
 			quaternion = (imu.orientation.x, imu.orientation.y, imu.orientation.z, imu.orientation.w)
 			euler = tf.transformations.euler_from_quaternion(quaternion)
 			heading = degrees(euler[2]) # in degrees, 0 indicates northward direction, positive is counter-clockwise, interval is [+180 and -180]
-			print 'IMU signal received for SMACH.'
 
 			lat1 = currentPosition.lat
 			lng1 = currentPosition.lng
@@ -167,6 +163,7 @@ class Navigate(smach.State):
 			distance = haversine(lat1,lng1,lat2,lng2)
 			bearing = angle(lat1,lng1,lat2,lng2) # degrees
 			direction = (bearing - heading) % 360 # degrees
+			print 'Distance: %.1f, Direction: %.1f' % (distance, direction)
 
 			# Check whether robot arrived at waypoint or not
 			if distance <= goal_tolerance:
@@ -198,7 +195,7 @@ class CheckWaypoint(smach.State):
 
 		rospy.loginfo('Executing state CHECK_WAYPOINT')
 
-		if waypoint == (len(waypoints)-1):
+		if userdata.waypoint == (len(userdata.waypoints)-1):
 			print 'Navigation is successful.'
 			return 'succeeded'
 		else:

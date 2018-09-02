@@ -33,7 +33,7 @@ cd <workspace>/src
 git clone https://github.com/RobotWebTools/roslibjs.git
 ```
 
-Install pip to install software packages written in Python. 
+Install pip to install software packages written in Python.
 ```
 sudo apt-get install python-pip
 ```
@@ -92,6 +92,8 @@ This will load the configuration file onto the parameter server and run both the
 <img src="/images/GPS_filter_flow_diagram.jpg"  width="500">
 
 A flow diagram of the GPS filter is shown above. In between the interval which the filter receives GPS signal, geocoordinates of the robot can be intrapolated using odometry and IMU. Predicted geocoordinates are fed to the state machine to indicate the current position of the robot. Once the filter receives GPS signal, geocoordinates of the robot can be updated. The raw GPS signal is averaged using moving average filter to reduce volatility. Complementary filter takes both predicted geocoordinates and averaged GPS signal as inputs and produces an estimated geocoordinates as output. The lower the covariance of the raw GPS signal, the more skewed the estimated geocoordinates towards the averaged GPS signal and away from the predicted geocoordinates is, and vice versa. Estimated geocoordinates are then fed to the state machine to indicate the current position of the robot.
+
+Note: Odometry frame needs to be resetted before initializing the GPS filter.
 
 ## State Machine
  <img src="/images/state_machine_flow_diagram.jpg"  width="500">
