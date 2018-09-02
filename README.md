@@ -2,10 +2,10 @@
 This is a high-level state machine that implements delivery mechanism onto the Powerbot.
 
 This state machine was tested using:
-- Ubuntu 16.04.3 Xenial
+- Ubuntu 16.04.5 Xenial
 - ROS Kinetic
 - Python 2.7.12
-- Mozilla Firefox 54.0
+- Mozilla Firefox 61.0.1
 
 # Setup
 ## Installation
@@ -54,14 +54,14 @@ Within the powerbot_delivery_config.yaml file, modify the following parameters:
 ```
 reload_path
 ```
-This should be 
+This should be the path to the recovery.jsonlz4 file located within .mozilla directory.
 
 ```
 map_url
 ```
 This should be the url when you open scripts/map.html in the browser.
 
-There are other parameters within the configuration file that you should change as required.
+There are other parameters within the configuration file that you should change as needed.
 
 # Running
 
