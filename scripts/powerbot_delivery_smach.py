@@ -68,13 +68,14 @@ class Selection(smach.State):
 			rospy.delete_param('waypoints_ros')
 
 		# Open or reload web console to select destination
-		path = rospy.get_param('powerbot_delivery/reload_path')
+		reload_path = rospy.get_param('powerbot_delivery/reload_path')
+		map_path = rospy.get_param('powerbot_delivery/map_path')
 		map_url = rospy.get_param('powerbot_delivery/map_url')
 		current_url = ''
 
 		# Check whether Firefox is opened or not
-		if (os.path.isfile(path) and (subprocess.call('ps -A | grep firefox', shell = True) == 0)):
-			f = open(path,'r')
+		if (os.path.isfile(reload_path) and (subprocess.call('ps -A | grep firefox', shell = True) == 0)):
+			f = open(reload_path,'r')
 			magic = f.read(8) # First 8 bytes in recovery.jsonlz4 are part of mozillas custom file format
 			jdata = json.loads(lz4.decompress(f.read()).decode('utf-8'))
 			f.close()
@@ -93,7 +94,8 @@ class Selection(smach.State):
 		if (current_url == map_url):
 			subprocess.call('xvkbd -window Firefox -text "\Cr" &', shell = True)
 		else:
-			subprocess.call('firefox ~/catkin_ws/src/powerbot_delivery/scripts/map.html &', shell = True)
+			open_cmd = 'firefox %s &' % map_path
+			subprocess.call(open_cmd, shell = True)
 
 		while not rospy.is_shutdown():
 			if self.preempt_requested():

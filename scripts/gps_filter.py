@@ -206,7 +206,7 @@ def main():
 		print 'GPS signal received for filter.'
 	state.previous_lat = sum(lat_list)/len(lat_list)
 	state.previous_lng = sum(lng_list)/len(lng_list)
-	print 'Sufficient GPS Signals received for averaging.'
+	print 'Sufficient GPS signals received for averaging.'
 
 	print 'Waiting for Odometry for filter...'
 	odom_topic = rospy.get_param('powerbot_delivery/odom_topic_filter')

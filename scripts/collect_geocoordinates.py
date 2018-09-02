@@ -14,7 +14,7 @@ def main():
 
     print 'Start collecting geocoordinate...'
     geocoordinateSub = rospy.Subscriber('android/fix', NavSatFix, geocoordinate_cb)
-    geocoordinateKfSub = rospy.Subscriber('android/fix_filter', NavSatFix, geocoordinate_kf_cb)
+    geocoordinateKfSub = rospy.Subscriber('android/fix_filter', NavSatFix, geocoordinate_filter_cb)
     rospy.spin()
 
 def geocoordinate_cb(msg):
@@ -23,7 +23,7 @@ def geocoordinate_cb(msg):
         f.write('%f %f\n' % (msg.latitude, msg.longitude))
         f.close()
 
-def geocoordinate_kf_cb(msg):
+def geocoordinate_filter_cb(msg):
     with open('geocoordinates_filter.txt','a') as f:
         print '%f %f' % (msg.latitude, msg.longitude)
         f.write('%f %f\n' % (msg.latitude, msg.longitude))

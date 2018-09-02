@@ -1,19 +1,49 @@
 powerbot_delivery:
-  # GPS Filter
+  ### GPS Filter ###
+  # Topic which GPS signal is received from.
+  # Typically, it is raw signal.
   gps_topic_filter: 'android/fix'
+  # Topic which IMU signal is received from.
   imu_topic_filter: 'android/imu'
+  # Topic which odometry signal is received from.
   odom_topic_filter: 'rosaria/pose'
+  # Number of sample size in averaging to determine initial location of the robot.
   num_geocoordinates_initial: 10
+  # Number of sample size in moving average filter.
   num_geocoordinates: 5
+  # Magnetic declination of the location.
+  # Degrees, positive is clockwise from True North to Magnetic North, interval is [-180,+180)
   magnetic_declination: 16.18
+  # Offset in heading of the robot which can be adjusted by user as needed.
+  # Degrees, positive is counter-clockwise offset in heading of the robot, interval is [0,+360)
   yaw_offset: 0
+  # Minimum covariance threshold in which any lower covariance of raw GPS signal causes estimated geocoordinates to be equal to averaged GPS signal
   min_covariance_threshold: 9
+  # Maximum covariance threshold in which any higher covariance of raw GPS signal causes estimated geocoordinates to be equal to predicted geocoordinates
   max_covariance_threshold: 100
+  # Publishing frequency of the GPS filter
+  # Affect moving average filter due to altered sample size
   pub_freq: 10
 
-  # Powerbot Delivery's SMACH
-  gps_topic_smach: 'android/fix_filter' # '/navsat/fix'
-  imu_topic_smach: 'android/imu' #'/imu/data'
-  reload_path: # '/home/caris/.mozilla/firefox/6u2woyqf.default/sessionstore-backups/recovery.jsonlz4'
-  map_url: 'file:///home/parallels/catkin_ws/src/powerbot_delivery/scripts/map.html' # 'file:///home/caris/sidewalk_navigation2/sidewalk_navigation/simulation/simulation_ros_catkin_ws/src/powerbot_delivery/scripts/map.html'
+  ### State Machine ###
+  # Topic which GPS signal is received from.
+  # Typically it is filtered signal.
+  gps_topic_smach: 'android/fix_filter'
+  # Topic which IMU signal is received from.
+  imu_topic_smach: 'android/imu'
+  # Path to the recovery.jsonlz4 file located within .mozilla directory.
+  # Typically, it is /home/<user>/.mozilla/firefox/<alphanumeric characters>.default/sessionstore-backups/recovery.jsonlz4
+  reload_path: '/home/parallels/.mozilla/firefox/s54hjft6.default/sessionstore-backups/recovery.jsonlz4'
+  # Path to scripts/map.html
+  # Typically, it is /home/<user>/<workspace>/src/powerbot_delivery/scripts/map.html
+  map_path: '/home/parallels/catkin_ws/src/powerbot_delivery/scripts/map.html'
+  # Url when scripts/map.html is opened in the browser.
+  # Typically, it is file:///home/<user>/<workspace>/src/powerbot_delivery/scripts/map.html
+  map_url: 'file:///home/parallels/catkin_ws/src/powerbot_delivery/scripts/map.html'
+  # Tolerance from the waypoint which the robot is considered arrived.
+  # Meters
   goal_tolerance: 11
+
+  ### Web GUI ###
+  # Topic which GPS signal is received from (i.e. the same topic that is fed to the state machine) can be changed in line 109
+  # Google Maps' API Key can be changed in line 196
