@@ -77,6 +77,7 @@ This will load the configuration file onto the parameter server and run both the
 
 # Mechanism
 ## GPS Filter
+<img src="/images/GPS_filter_flow_diagram.jpg"  width="500">
 
 ## State Machine
  <img src="/images/state_machine_flow_diagram.jpg"  width="500">
