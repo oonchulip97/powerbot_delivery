@@ -48,6 +48,11 @@ Install lz4 to enable decompression of Firefox .jsonlz4 files.
 pip install lz4
 ```
 
+Install xvkbd to reload web console.
+```
+sudo apt-get install xvkbd
+```
+
 ## Configuration
 Within the powerbot_delivery_config.yaml file, modify the following parameters:
 
