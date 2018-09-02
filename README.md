@@ -79,6 +79,8 @@ This will load the configuration file onto the parameter server and run both the
 ## GPS Filter
 <img src="/images/GPS_filter_flow_diagram.jpg"  width="500">
 
+A flow diagram of the GPS filter is shown above. Before the filter receives any GPS signal, geocoordinates of the robot can be intrapolated using odometry and IMU. Once the filter receives GPS signal, the raw GPS signal is averaged using moving average filter to reduce volatility. Complementary filter takes both predicted geocoordinates and averaged GPS signal as inputs and produces an estimated geocoordinates as output. The lower the covariance of the raw GPS signal, the more skewed the estimated geocoordinates towards the GPS signal is, and vice versa. Estimated geocoordinates can be fed to the state machine.
+
 ## State Machine
  <img src="/images/state_machine_flow_diagram.jpg"  width="500">
 
