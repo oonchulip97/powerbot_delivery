@@ -80,3 +80,5 @@ This will load the configuration file onto the parameter server and run both the
 
 ## State Machine
  <img src="/images/state_machine_flow_diagram.jpg"  width="500">
+
+A flow diagram of the state machine is shown above. After the user selects a delivery location, a path is computed by Google Maps' API with waypoints located at each intersection between the robot's initial location and the goal. The state machine will continuously check for the robot's arrival at a given waypoint. Only if the robot has not reached the waypoint yet, then the waypoint will be send to the low-level motor controller cyclically. However, if the robot has reached within a predefined tolerance of the waypoint, the state machine will check if there are more waypoints. If more waypoints exists, the current waypoint is updated with the next waypoint. Otherwise, if no more waypoints exist, it indicates that the robot has reached its goal, and the navigation is completed.
